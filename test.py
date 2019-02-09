@@ -1,5 +1,4 @@
 import sys
-import _thread
 from display import *
 
 def sorting(arr) :
@@ -78,7 +77,7 @@ if __name__ == "__main__":
     if len(sys.argv)==1:
         deck_maker()
         randomize_card()
-        _thread.start_new_thread(Solver24App().run())
+        Solver24App().run()
         unsorted_list = []
         for i in range (4):
             temp = list_of_card[i][0]

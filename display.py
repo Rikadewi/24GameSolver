@@ -46,9 +46,7 @@ def randomize_card():
 class MyCardDisplay(FloatLayout):
     pass
 
-class _24SolverApp(App):
-    deck_maker()
-    randomize_card()
+class Solver24App(App):
     def build(self):
         return MyCardDisplay()
 
