@@ -1,0 +1,57 @@
+#:import randomize_card display.randomize_card
+#:import draw_card display.draw_card
+
+<MyCardDisplay>:
+	size : (300,300)
+	Label :
+		text : 'Welcome to 24Solver!'
+		font_size : 50
+		pos : (0,300)
+	BoxLayout:
+		orientation :'vertical'
+		pos : (0,-100)
+		BoxLayout:
+			orientation : 'horizontal'
+			AnchorLayout: 
+				anchor_x : 'center'
+				anchor_y : 'center'
+				Image :
+					id : cardimg1
+					source : draw_card(0)
+					size_hint:(.75, .75)
+			AnchorLayout: 
+				anchor_x : 'center'
+				anchor_y : 'center'
+				Image :
+					id : cardimg2
+					source : draw_card(1)
+					size_hint:(.75, .75)
+			AnchorLayout: 
+				anchor_x : 'center'
+				anchor_y : 'center'
+				Image :
+					id : cardimg3
+					source : draw_card(2)
+					size_hint:(.75, .75)
+			AnchorLayout: 
+				anchor_x : 'center'
+				anchor_y : 'center'
+				Image :
+					id : cardimg4
+					source : draw_card(3)
+					size_hint:(.75, .75)
+		AnchorLayout: 
+			anchor_x : 'center'
+			anchor_y : 'center'
+			Button:
+				on_press :
+					randomize_card()
+					cardimg1.source = draw_card(0)
+					cardimg2.source = draw_card(1)
+					cardimg3.source = draw_card(2)
+					cardimg4.source = draw_card(3)
+				text: 'Randomize'
+				font_size : 40
+				size_hint: (.5, .25)
+				background_normal : ''
+				background_color : (.7,.3,0 ,1)

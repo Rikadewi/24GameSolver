@@ -1,4 +1,6 @@
 import sys
+import _thread
+from display import *
 
 def sorting(arr) :
     if len(arr)==0 :
@@ -62,10 +64,28 @@ def calc_score(s,obj):
         score-=1
     return score
 
+def cards_to_number(argument): 
+    switcher = { 
+        A : "1",
+        J : "10",
+        Q : "11",
+        K : "12",
+    }
+    return switcher.get(argument, "nothing") 
+
 if __name__ == "__main__":
     hasil = []
     if len(sys.argv)==1:
-        sorted_list = sorting(list(map(str, input("24 Game Solver\nMasukan input: ").split())))
+        deck_maker()
+        randomize_card()
+        _thread.start_new_thread(Solver24App().run())
+        unsorted_list = []
+        for i in range (4):
+            temp = list_of_card[i][0]
+            if (temp == 'A') or (temp == 'J') or (temp == 'Q') or (temp == 'K'):
+                cards_to_number(temp)
+            unsorted_list.append(temp)
+        sorted_list = sorting(unsorted_list)
     elif len(sys.argv)==3 :
         file_input = sys.argv[1]
         file_output = sys.argv[2]
