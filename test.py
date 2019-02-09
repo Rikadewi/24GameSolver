@@ -1,4 +1,5 @@
 import sys
+import threading
 from display import *
 
 def sorting(arr) :
@@ -63,26 +64,29 @@ def calc_score(s,obj):
         score-=1
     return score
 
-def cards_to_number(argument): 
-    switcher = { 
-        A : "1",
-        J : "10",
-        Q : "11",
-        K : "12",
-    }
-    return switcher.get(argument, "nothing") 
+def cards_to_strnumber(arg): 
+    if arg == 'A':
+        return '1'
+    elif arg == 'J':
+        return '10'
+    elif arg == 'Q':
+        return '11'
+    else:
+        return '12'
+
+t = threading.Thread(target = StartDisplay)
 
 if __name__ == "__main__":
     hasil = []
     if len(sys.argv)==1:
         deck_maker()
         randomize_card()
-        Solver24App().run()
+        t.start();
         unsorted_list = []
         for i in range (4):
             temp = list_of_card[i][0]
             if (temp == 'A') or (temp == 'J') or (temp == 'Q') or (temp == 'K'):
-                cards_to_number(temp)
+                temp = cards_to_strnumber(temp)
             unsorted_list.append(temp)
         sorted_list = sorting(unsorted_list)
     elif len(sys.argv)==3 :

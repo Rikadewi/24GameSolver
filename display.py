@@ -50,5 +50,8 @@ class Solver24App(App):
     def build(self):
         return MyCardDisplay()
 
+def StartDisplay():
+    Solver24App().run()
+    
 # if __name__ == "__main__":
 #     _24SolverApp().run()
