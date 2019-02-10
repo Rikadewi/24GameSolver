@@ -1,25 +1,4 @@
 import sys
-import threading
-from display import *
-
-def sorting(arr) :
-    if len(arr)==0 :
-        return []
-    last = arr[len(arr)-1]
-    arr = arr[:(len(arr)-1)]
-    left = []
-    right = []
-
-    for i in range (0,len(arr)):
-        if arr[i]>=last :
-            left.append(arr[i])
-        else :
-            right.append(arr[i]) 
-    
-    left = sorting(left)
-    hasil.append(last)
-    right = sorting(right)
-    return hasil
 
 def eval(x1,x2,op):
     x1 = float(x1)
@@ -49,6 +28,7 @@ def calc_score(s,obj):
     plusmin = False
     kurung = False
     score = 0
+    actual_score = 0
     i=1
     temp= int (s[i-1])
     while (i+1<=len(s)) :
@@ -57,12 +37,15 @@ def calc_score(s,obj):
         if ((s[i]=='*' or s[i]=='/') and plusmin):
             kurung = True
         score += give_score(s[i])
+        actual_score += give_score(s[i])
         temp= eval(str(temp),s[i+1],s[i])
         i+=2    
     score -= abs(obj-temp)*3
+    actual_score -= abs(obj-temp)
     if kurung :
         score-=1
-    return score
+        actual_score -= 1
+    return score, actual_score
 
 def cards_to_strnumber(arg): 
     if arg == 'A':
@@ -73,70 +56,3 @@ def cards_to_strnumber(arg):
         return '11'
     else:
         return '12'
-
-t = threading.Thread(target = StartDisplay)
-
-if __name__ == "__main__":
-    hasil = []
-    if len(sys.argv)==1:
-        deck_maker()
-        randomize_card()
-        t.start();
-        unsorted_list = []
-        for i in range (4):
-            temp = list_of_card[i][0]
-            if (temp == 'A') or (temp == 'J') or (temp == 'Q') or (temp == 'K'):
-                temp = cards_to_strnumber(temp)
-            unsorted_list.append(temp)
-        sorted_list = sorting(unsorted_list)
-    elif len(sys.argv)==3 :
-        file_input = sys.argv[1]
-        file_output = sys.argv[2]
-
-        f = open(file_input, "r")
-        contents = f.read()
-        f.close()
-        sorted_list = sorting(contents.split())
-    else :
-        print("Wrong input format")
-
-    op_list = ['X','X','X']
-    score = -9999
-    for op in '+-*/':
-        #print(sorted_list[0]+op+sorted_list[1])
-        temp = calc_score([sorted_list[0],op,sorted_list[1]], 24-float(sorted_list[2])-float(sorted_list[3]))
-        # print('op1: ', temp)
-        if(temp > score):
-            score = temp
-            op_list[0] = op
-
-    score = -9999            
-    for op in '+-*/':
-        temp = calc_score([sorted_list[0],op_list[0],sorted_list[1],op,sorted_list[2]], 24-float(sorted_list[3]))
-        #print('op2: ', temp)
-        if(temp > score):
-            score = temp
-            op_list[1] = op
-
-    score = -9999            
-    for op in '+-*/':
-        temp = calc_score([sorted_list[0],op_list[0],sorted_list[1],op_list[1],sorted_list[2],op,sorted_list[3]], 24)
-        #print('op3: ', temp)
-        if(temp > score):
-            score = temp
-            op_list[2] = op
-    
-    if (op_list[0] == '+' or op_list[0] == '-') and (op_list[1] == '*' or op_list[1] == '/'):
-        s= '('+sorted_list[0]+op_list[0]+sorted_list[1]+')'+op_list[1]+sorted_list[2]+op_list[2]+sorted_list[3]
-    elif (op_list[1] == '+' or op_list[1] == '-') and (op_list[2] == '*' or op_list[2] == '/'):
-        s = '('+sorted_list[0]+op_list[0]+sorted_list[1]+op_list[1]+sorted_list[2]+')'+op_list[2]+sorted_list[3]
-    else:
-        s = sorted_list[0]+op_list[0]+sorted_list[1]+op_list[1]+sorted_list[2]+op_list[2]+sorted_list[3]
-    
-    if len(sys.argv)==1:
-        print(s)
-    elif len(sys.argv)==3 :
-        f = open(file_output, "w+")
-        f.write(s)
-        f.close()
-    print(score)

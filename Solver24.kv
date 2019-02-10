@@ -2,56 +2,76 @@
 #:import draw_card display.draw_card
 
 <MyCardDisplay>:
-	size : (300,300)
+	id: CardDisplay
+	answerLbl : ansLbl
+	scoreLbl : scrLbl
 	Label :
 		text : 'Welcome to 24Solver!'
 		font_size : 50
 		pos : (0,300)
+	Label :
+		id : ansLbl
+		text: ''
+		font_size : 30
+		pos : (0,-180)
+	Label :
+		id : scrLbl
+		text : 'Score: 0'
+		font_size : 40
+		pos : (0,250)
+	Button:
+		pos : (200,10)
+		size_hint: (0.2,0.105)
+		text: 'Calculate'
+		on_press :
+			CardDisplay.update_calculate()
+		font_size : 30
+		background_normal : ''
+		background_color : (.7,.3,0 ,1)
+	Button:
+		pos : (800,10)
+		size_hint: (0.2,0.1)
+		on_press :
+			CardDisplay.update_new()
+			randomize_card()
+			cardimg1.source = draw_card(0)
+			cardimg2.source = draw_card(1)
+			cardimg3.source = draw_card(2)
+			cardimg4.source = draw_card(3)
+		text: 'Randomize'
+		font_size : 30
+		background_normal : ''
+		background_color : (.7,.3,0 ,1)
 	BoxLayout:
 		orientation :'vertical'
-		pos : (0,-100)
+		pos : (0,70)
 		BoxLayout:
 			orientation : 'horizontal'
-			AnchorLayout: 
+			AnchorLayout:
 				anchor_x : 'center'
 				anchor_y : 'center'
 				Image :
 					id : cardimg1
 					source : draw_card(0)
-					size_hint:(.75, .75)
+					size_hint:(.65, .65)
 			AnchorLayout: 
 				anchor_x : 'center'
 				anchor_y : 'center'
 				Image :
 					id : cardimg2
 					source : draw_card(1)
-					size_hint:(.75, .75)
+					size_hint: (.65, .65)
 			AnchorLayout: 
 				anchor_x : 'center'
 				anchor_y : 'center'
 				Image :
 					id : cardimg3
 					source : draw_card(2)
-					size_hint:(.75, .75)
+					size_hint: (.65, .65)
 			AnchorLayout: 
 				anchor_x : 'center'
 				anchor_y : 'center'
 				Image :
 					id : cardimg4
 					source : draw_card(3)
-					size_hint:(.75, .75)
-		AnchorLayout: 
-			anchor_x : 'center'
-			anchor_y : 'center'
-			Button:
-				on_press :
-					randomize_card()
-					cardimg1.source = draw_card(0)
-					cardimg2.source = draw_card(1)
-					cardimg3.source = draw_card(2)
-					cardimg4.source = draw_card(3)
-				text: 'Randomize'
-				font_size : 40
-				size_hint: (.5, .25)
-				background_normal : ''
-				background_color : (.7,.3,0 ,1)
+					size_hint:(.65, .65)
