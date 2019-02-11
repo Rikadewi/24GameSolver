@@ -5,22 +5,10 @@
 	id: CardDisplay
 	answerLbl : ansLbl
 	scoreLbl : scrLbl
-	Label :
-		text : 'Welcome to 24Solver!'
-		font_size : 50
-		pos : (0,300)
-	Label :
-		id : ansLbl
-		text: ''
-		font_size : 30
-		pos : (0,-180)
-	Label :
-		id : scrLbl
-		text : 'Score: 0'
-		font_size : 40
-		pos : (0,250)
+	totalLbl : ttlLbl
+	infoLbl : ifLbl
 	Button:
-		pos : (200,10)
+		pos : (200,60)
 		size_hint: (0.2,0.105)
 		text: 'Calculate'
 		on_press :
@@ -29,7 +17,7 @@
 		background_normal : ''
 		background_color : (.7,.3,0 ,1)
 	Button:
-		pos : (800,10)
+		pos : (800,60)
 		size_hint: (0.2,0.1)
 		on_press :
 			CardDisplay.update_new()
@@ -75,3 +63,28 @@
 					id : cardimg4
 					source : draw_card(3)
 					size_hint:(.65, .65)
+	Label :
+		text : 'Welcome to 24Solver!'
+		font_size : 50
+		pos : (0,320)
+	Label :
+		id : ansLbl
+		text: ''
+		font_size : 35
+		pos : (0,-140)
+	Label :
+		id : ttlLbl
+		text : 'Final score: 0'
+		font_size : 25
+		pos : (500,300)
+	Label :
+		id : scrLbl
+		text : 'Score[b]: 0[b]'
+		markup : True
+		font_size : 40
+		pos : (0,250)
+	Label :
+		id : ifLbl
+		text : ""
+		font_size : 20
+		pos: (0,-320)

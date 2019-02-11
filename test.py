@@ -1,5 +1,7 @@
 import sys
 
+hasil = []
+
 def eval(x1,x2,op):
     x1 = float(x1)
     x2 = float(x2)
@@ -56,3 +58,4 @@ def cards_to_strnumber(arg):
         return '11'
     else:
         return '12'
+

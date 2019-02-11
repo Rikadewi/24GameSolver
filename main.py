@@ -32,4 +32,4 @@ if __name__ == "__main__":
         contents[2]=int(contents[2])
         contents[3]=int(contents[3])
 
-    print(score)
+        print(score_actual)
