@@ -25,7 +25,6 @@ card_deck = []
 list_of_card = []
 #variabel score
 score_final = 0
-score_actual = 0
 
 # fungsi sorting berfungsi untuk mengurutkan elemen dalam list sehingga terurut mengecil
 def sorting(arr) :
@@ -70,10 +69,7 @@ def randomize_card():
             list_of_card.append(card)
     print(list_of_card)
 
-
-def calculate():
-    global score_final
-    global score_actual
+def acakkartu():
     sorted_list = []
     unsorted_list = []
 
@@ -89,21 +85,29 @@ def calculate():
     unsorted_list[3] = int(unsorted_list[3])
 
     sorted_list = sorting(unsorted_list)
+    return sorted_list
 
-    print(sorted_list)
-
+#algoritma backend
+def calculate(sorted_list):
+    global score_final
+    # print(sorted_list)
+    
+    #list operator
     op_list = ['X','X','X']
     score = -9999
+    score_actual = 0
+    #fungsi objektif : 24 - c-d
+    #untuk menemukan operaotr diantara a dan b yang paling mendekati fungsi objektif
     for op in '+-*/':
-        #print(sorted_list[0]+op+sorted_list[1])
         temp, temp_final = calc_score([sorted_list[0],op,sorted_list[1]], 24-float(sorted_list[2])-float(sorted_list[3]))
-        # print('op1: ', temp)
         if(temp > score):
             score = temp
             score_actual = temp_final
             op_list[0] = op
 
-    score = -9999            
+    score = -9999
+    #fungsi objektif : 24-d
+    #untuk menemukan operaotr diantara (ab) dan c yang paling mendekati fungsi objektif
     for op in '+-*/':
         temp, temp_final = calc_score([sorted_list[0],op_list[0],sorted_list[1],op,sorted_list[2]], 24-float(sorted_list[3]))
         #print('op2: ', temp)
@@ -112,7 +116,9 @@ def calculate():
             score_actual = temp_final
             op_list[1] = op
 
-    score = -9999            
+    score = -9999          
+    #fungsi objektif : 24
+    #untuk menemukan operaotr diantara (abc) dan d yang paling mendekati fungsi objektif
     for op in '+-*/':
         temp, temp_final = calc_score([sorted_list[0],op_list[0],sorted_list[1],op_list[1],sorted_list[2],op,sorted_list[3]], 24)
         #print('op3: ', temp)
@@ -120,7 +126,8 @@ def calculate():
             score = temp
             score_actual = temp_final
             op_list[2] = op
-
+            
+    #membuat ekspresi dalam bentuk string
     if (op_list[0] == '+' or op_list[0] == '-') and (op_list[1] == '*' or op_list[1] == '/'):
         s= '('+str(sorted_list[0])+op_list[0]+str(sorted_list[1])+')'+op_list[1]+str(sorted_list[2])+op_list[2]+str(sorted_list[3])
     elif (op_list[1] == '+' or op_list[1] == '-') and (op_list[2] == '*' or op_list[2] == '/'):
@@ -128,12 +135,14 @@ def calculate():
     else:
         s = str(sorted_list[0])+op_list[0]+str(sorted_list[1])+op_list[1]+str(sorted_list[2])+op_list[2]+str(sorted_list[3])
 
+    #akumulasi score_final
     score_final += score_actual
     is24 = False
+    #memeriksa apakah hasilnya sama dengan 24
     if eval(eval(eval(sorted_list[0],sorted_list[1],op_list[0]),sorted_list[2],op_list[1]),sorted_list[3],op_list[2]) == 24:
         is24 = True
-        
-    return s, is24
+    
+    return s, is24, score_actual
 
 #kelas MyCardDisplay berupa objek yang berisi seluruh atribut yang diperlukan untuk tampilan program
 class MyCardDisplay(FloatLayout):
@@ -141,7 +150,8 @@ class MyCardDisplay(FloatLayout):
         self.answerLbl.text = ''
         self.infoLbl.text = ''
     def update_calculate(self):
-        answer, isdeletecard = calculate()
+        sorted_list = acakkartu()
+        answer, isdeletecard, score_actual = calculate(sorted_list)
         self.totalLbl.text = 'Final score: ' + str(score_final)
         self.scoreLbl.text = 'Score:[b] ' + str(score_actual)
         self.answerLbl.text = 'Answer: ' + answer

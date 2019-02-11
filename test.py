@@ -1,7 +1,9 @@
 import sys
 
 hasil = []
+#variabel untuk menampung hasil sorting
 
+#untuk menghitung hasil dari suatu ekspresi, menerima dua buah integer dan sebuah operator
 def eval(x1,x2,op):
     x1 = float(x1)
     x2 = float(x2)
@@ -16,6 +18,7 @@ def eval(x1,x2,op):
             return -9999
         return x1/x2    
 
+#memberikan score berdasarkan operator
 def give_score(op):
     if op=='+':
         return 5
@@ -26,6 +29,7 @@ def give_score(op):
     elif op=='/':
         return 2
 
+#menghitung score akhir dan score semu berdasarkan nilai operator dan selisih jawaban dengan 24
 def calc_score(s,obj):
     plusmin = False
     kurung = False
@@ -49,6 +53,7 @@ def calc_score(s,obj):
         actual_score -= 1
     return score, actual_score
 
+#megubah nilai dari kartu yang bukan merupakan angka
 def cards_to_strnumber(arg): 
     if arg == 'A':
         return '1'
