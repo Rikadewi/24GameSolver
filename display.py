@@ -11,20 +11,23 @@ from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.boxlayout import BoxLayout
 from test import *
 
+#pengaturan window
 Window.size = (1200,700)
 Window.clearcolor = (0.1, 0.25, 0.1, 0.1)
-
+#script_dir adalah variabel untuk menampung path system
 script_dir = sys.path[0]
-
-list_of_opr = ['+','-','*','/']
+#list_of_type dan list_of_number berisi elemen-elemen yang membentuk sebuah kartu utuh (contoh: 5H artinya 5 Hearts)
 list_of_type = ['S','C','H','D']
 list_of_number = ['A','2','3','4','5','6','7','8','9','J','Q','K']
-list_of_card = []
-history = []
+#card_deck berguna untuk menampung deck kartu yang berupa 52 kartu remi
 card_deck = []
+#list_of_card bergna untuk menampung 4 kartu yang ingin dimainkan
+list_of_card = []
+#variabel score
 score_final = 0
 score_actual = 0
 
+# fungsi sorting berfungsi untuk mengurutkan elemen dalam list sehingga terurut mengecil
 def sorting(arr) :
     if len(arr)==0 :
         return []
@@ -44,6 +47,7 @@ def sorting(arr) :
     right = sorting(right)
     return hasil
 
+#fungsi deck_maker berfungsi untuk mengisi list card_deck dengan 52 kartu remi
 def deck_maker():
     del(card_deck[:])
     for num in list_of_number:
@@ -51,19 +55,21 @@ def deck_maker():
             temp = num + ty
             card_deck.append(temp)
 
+#fungsi draw_card berfungsi untuk mengembalikan path sebagai source image sesuai dengan nama kartu
 def draw_card(index):
 	return os.path.join(script_dir, 'Cards/' + str(list_of_card[index]) + '.png')
 
+#fungsi randomize card berfungsi untuk mengambil 4 kartu dari card_deck secara random dan memasukkannya dalam list_of_card
 def randomize_card():
     if not card_deck:
         pass
     else:
-        del(history[:])
         del(list_of_card[:])
         for x in range (4):
             card = random.choice(card_deck)
             list_of_card.append(card)
     print(list_of_card)
+
 
 def calculate():
     global score_final
@@ -129,6 +135,7 @@ def calculate():
         
     return s, is24
 
+#kelas MyCardDisplay berupa objek yang berisi seluruh atribut yang diperlukan untuk tampilan program
 class MyCardDisplay(FloatLayout):
     def update_new(self):
         self.answerLbl.text = ''
@@ -148,6 +155,7 @@ class MyCardDisplay(FloatLayout):
         print("cards on deck:")
         print(card_deck)
 
+#App Solver24 yang berupa aplikasi dasar dari game24Solver khusus untuk Front End yang menggunakan GUI
 class Solver24App(App):
     def build(self):
         return MyCardDisplay()
