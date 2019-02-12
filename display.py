@@ -13,7 +13,7 @@ from test import *
 
 #pengaturan window
 Window.size = (1200,700)
-Window.clearcolor = (0.1, 0.25, 0.1, 0.1)
+Window.clearcolor = (0.9, 0.9, 0.9, 0.9)
 #script_dir adalah variabel untuk menampung path system
 script_dir = sys.path[0]
 #list_of_type dan list_of_number berisi elemen-elemen yang membentuk sebuah kartu utuh (contoh: 5H artinya 5 Hearts)
@@ -146,24 +146,31 @@ def calculate(sorted_list):
 
 #kelas MyCardDisplay berupa objek yang berisi seluruh atribut yang diperlukan untuk tampilan program
 class MyCardDisplay(FloatLayout):
+    def start(self):
+        self.remove_widget(self.startImg)
+        self.remove_widget(self.startBtn)
     def update_new(self):
         self.answerLbl.text = ''
         self.infoLbl.text = ''
     def update_calculate(self):
         sorted_list = acakkartu()
         answer, isdeletecard, score_actual = calculate(sorted_list)
-        self.totalLbl.text = 'Final score: ' + str(score_final)
-        self.scoreLbl.text = 'Score:[b] ' + str(score_actual)
-        self.answerLbl.text = 'Answer: ' + answer
+        self.totalLbl.text = '[color=0f0c0c]Final score: ' + str(score_final)
+        self.scoreLbl.text = '[color=a87070]Score:[b] ' + str(score_actual)
+        self.answerLbl.text = '[color=0f0c0c]Answer: ' + answer
         if (isdeletecard):
             for x in range (4):
                 card = list_of_card[x]
                 card_deck.remove(card)
                 self.infoLbl.text = ''
         else:
-            self.infoLbl.text = 'Answer is not 24, cards returned to deck'
+            self.infoLbl.text = '[color=a87070]Answer is not 24, cards returned to deck'
         print("cards on deck:")
         print(card_deck)
+        if not card_deck:
+            self.deck_empty() 
+    def deck_empty(self):
+        self.start(self)
 
 #App Solver24 yang berupa aplikasi dasar dari game24Solver khusus untuk Front End yang menggunakan GUI
 class Solver24App(App):

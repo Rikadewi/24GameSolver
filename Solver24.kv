@@ -1,12 +1,15 @@
 #:import randomize_card display.randomize_card
 #:import draw_card display.draw_card
+#:import MyCardDisplay display.MyCardDisplay
 
 <MyCardDisplay>:
-	id: CardDisplay
+	id : CardDisplay
 	answerLbl : ansLbl
 	scoreLbl : scrLbl
 	totalLbl : ttlLbl
 	infoLbl : ifLbl
+	startImg : tinyImg
+	startBtn : strtbtn
 	Button:
 		pos : (200,60)
 		size_hint: (0.2,0.105)
@@ -14,8 +17,7 @@
 		on_press :
 			CardDisplay.update_calculate()
 		font_size : 30
-		background_normal : ''
-		background_color : (.7,.3,0 ,1)
+		background_color : (0.8,0.6,0.6,0.8)
 	Button:
 		pos : (800,60)
 		size_hint: (0.2,0.1)
@@ -28,8 +30,7 @@
 			cardimg4.source = draw_card(3)
 		text: 'Randomize'
 		font_size : 30
-		background_normal : ''
-		background_color : (.7,.3,0 ,1)
+		background_color : (0.8,0.6,0.6,0.8)
 	BoxLayout:
 		orientation :'vertical'
 		pos : (0,70)
@@ -64,27 +65,44 @@
 					source : draw_card(3)
 					size_hint:(.65, .65)
 	Label :
-		text : 'Welcome to 24Solver!'
-		font_size : 50
-		pos : (0,320)
-	Label :
 		id : ansLbl
 		text: ''
 		font_size : 35
 		pos : (0,-140)
+		markup : True
 	Label :
 		id : ttlLbl
-		text : 'Final score: 0'
+		text : '[color=0f0c0c]Final score: 0[/color]'
 		font_size : 25
+		markup : True
 		pos : (500,300)
 	Label :
 		id : scrLbl
-		text : 'Score[b]: 0[b]'
+		text : '[b][color=a87070]Score: 0[/color][/b]'
 		markup : True
 		font_size : 40
 		pos : (0,250)
 	Label :
 		id : ifLbl
 		text : ""
+		markup : True
 		font_size : 20
 		pos: (0,-320)
+	Image:
+		id : tinyImg
+		source : 'start_screen.png'
+		allow_stretch : True
+	Button:
+		id : strtbtn
+		text : '[color=0f0c0c]Start[/color]'
+		markup : True
+		background_color : (0.8,0.6,0.6,0.8)
+		pos : (500,50)
+		size_hint : (0.2,0.1)
+		font_size : 30
+		on_press : CardDisplay.start()
+	Label :
+		text : '[b][color=0f0c0c]Welcome to 24Solver![/color][/b]'
+		font_size : 50
+		markup : True
+		pos : (0,320)
