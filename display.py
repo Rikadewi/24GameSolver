@@ -153,22 +153,27 @@ class MyCardDisplay(FloatLayout):
         self.answerLbl.text = ''
         self.infoLbl.text = ''
     def update_calculate(self):
-        sorted_list = acakkartu()
-        answer, isdeletecard, score_actual = calculate(sorted_list)
-        self.totalLbl.text = '[color=0f0c0c]Final score: ' + str(score_final)
-        self.scoreLbl.text = '[color=a87070]Score:[b] ' + str(score_actual)
-        self.answerLbl.text = '[color=0f0c0c]Answer: ' + answer
-        if (isdeletecard):
-            for x in range (4):
-                card = list_of_card[x]
-                card_deck.remove(card)
-                self.infoLbl.text = ''
+        if not list_of_card:
+            pass
         else:
-            self.infoLbl.text = '[color=a87070]Answer is not 24, cards returned to deck'
-        print("cards on deck:")
-        print(card_deck)
-        if not card_deck:
-            self.deck_empty() 
+            sorted_list = acakkartu()
+            answer, isdeletecard, score_actual = calculate(sorted_list)
+            self.totalLbl.text = '[color=0f0c0c]Final score: ' + str(score_final)
+            self.scoreLbl.text = '[color=a87070]Score:[b] ' + str(score_actual)
+            self.answerLbl.text = '[color=0f0c0c]Answer: ' + answer
+            if (isdeletecard):
+                print('isdelete')
+                for x in range (4):
+                    card = list_of_card[x]
+                    card_deck.remove(card)
+                    self.infoLbl.text = ''
+            else:
+                self.infoLbl.text = '[color=a87070]Answer is not 24, cards returned to deck'
+            del(list_of_card[:])
+            print("cards on deck:")
+            print(card_deck)
+            if not card_deck:
+                self.deck_empty() 
     def deck_empty(self):
         self.start(self)
 
